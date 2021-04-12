@@ -13,7 +13,7 @@ The PowerShell scripts provided as part of this project are provided as-is and a
 - [Sign the PowerShell scripts](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.1) before deployment.
 - For the Configuration Manager, configure the [PowerShell execution policy](https://docs.microsoft.com/en-us/mem/configmgr/core/clients/deploy/about-client-settings#powershell-execution-policy) in Client Settings to bypass script signing requirements.
 
-## Standalone PowerShell Script: Remediate_Office_TypeLib.ps1
+## Standalone PowerShell Script: Remediate-OfficeTypeLib.ps1
 
 The standalone PowerShell script contains the necessary logic to detect and remove all known orphaned Office TypeLib registry keys. When executed, this script will scan the current device and apply remediation automatically. 
 

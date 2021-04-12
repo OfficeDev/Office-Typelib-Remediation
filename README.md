@@ -1,29 +1,19 @@
 # Office TypeLib Remediation
 In some circumstances, devices that have had a previously installed 32-bit Office version may have leftover registry keys that interfere with COM and .NET functionality with a 64-bit Office version. Generally, these issues occur when the COM or .NET client is running as a 32-bit process. This project addresses remediation for these COM and .NET issues between 32-bit and 64-bit versions of Office.
 
-# Remediation Resources
-There are two resources available in this project to help detect and remediate orphaned Office TypeLib registry keys. Both of these resources are outlined below, along with basic guidance for deployment. Please read through the notes thoroughly before you begin testing.
+## In this repository
 
-## Logging
-Both resources are setup to log output in the following location: _%windir%\Temp\typelibfix.log_
+- [Standalone PowerShell Script: Remediate-OfficeTypeLib.ps1](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediate-OfficeTypeLib.ps1)
 
-## PowerShell Execution Policy
-The PowerShell scripts provided as part of this project are provided as-is and are not signed as part of this offering. Before deploying either resource, consider the following options:
+    The standalone PowerShell script contains the necessary logic to detect and remove all known orphaned Office TypeLib registry keys. When executed, this script will scan the current device and apply remediation automatically. 
 
-- [Sign the PowerShell scripts](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.1) before deployment.
-- For the Configuration Manager, configure the [PowerShell execution policy](https://docs.microsoft.com/en-us/mem/configmgr/core/clients/deploy/about-client-settings#powershell-execution-policy) in Client Settings to bypass script signing requirements.
+    **Script requirements:**
+    - Executed with administrative privileges
+    - Executed as a 64-bit process
 
-## Standalone PowerShell Script: Remediate-OfficeTypeLib.ps1
+- [Configuration Baseline: Remediation for Orphaned Office TypeLib Keys.cab](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediation%20for%20Orphaned%20Office%20TypeLib%20Keys.cab)
 
-The standalone PowerShell script contains the necessary logic to detect and remove all known orphaned Office TypeLib registry keys. When executed, this script will scan the current device and apply remediation automatically. 
-
-**Script requirements:**
-- Executed with administrative privileges
-- Executed as a 64-bit process
-
-## Configuration Baseline: Remediation for Orphaned Office TypeLib Keys.cab
-
-The [Configuration Baseline](https://docs.microsoft.com/en-us/mem/configmgr/compliance/deploy-use/create-configuration-baselines#configuration-baselines) is a variation of the standalone PowerShell script, adjusted to meet the requirements for Microsoft Endpoint Configuration Manager. Once imported into Configuration Manager, the baseline can be deployed in "_Monitor_" mode (non-remediation) to identify devices that have orphaned TypeLib registry keys. With remediation enabled, the baseline will remove all known orphaned keys from the affected devices.
+    The [Configuration Baseline](https://docs.microsoft.com/en-us/mem/configmgr/compliance/deploy-use/create-configuration-baselines#configuration-baselines) is a variation of the standalone PowerShell script, adjusted to meet the requirements for Microsoft Endpoint Configuration Manager. Once imported into Configuration Manager, the baseline can be deployed in "_Monitor_" mode (non-remediation) to identify devices that have orphaned TypeLib registry keys. With remediation enabled, the baseline will remove all known orphaned keys from the affected devices.
 
 ### Importing the Configuration Baseline
 1. Download the latest version of the **Remediation for Orphaned Office TypeLib Keys.cab**.
@@ -53,6 +43,15 @@ With remediation enabled, the script will remove all known orphaned Office TypeL
     - Check the boxes for automatic remediation as appropriate for your environment. Consider deploying without remediation first to monitor impacted devices, then enable remediation after 1-2 days.
     - Select the device collection containing devices that require detection and remediation.
     - Set the deployment schedule appropriately for your environment.
+
+## Logging
+Both resources are setup to log output in the following location: _%windir%\Temp\typelibfix.log_
+
+## PowerShell Execution Policy
+The PowerShell scripts provided as part of this project are provided as-is and are not signed as part of this offering. Before deploying either resource, consider the following options:
+
+- [Sign the PowerShell scripts](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.1) before deployment.
+- For the Configuration Manager, configure the [PowerShell execution policy](https://docs.microsoft.com/en-us/mem/configmgr/core/clients/deploy/about-client-settings#powershell-execution-policy) in Client Settings to bypass script signing requirements.
 
 # License
 

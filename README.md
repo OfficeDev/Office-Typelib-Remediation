@@ -54,6 +54,10 @@ With remediation enabled, the script will remove all known orphaned Office TypeL
     - Select the device collection containing devices that require detection and remediation.
     - Set the deployment schedule appropriately for your environment.
 
+# License
+
+Code licensed under the [MIT License](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/LICENSE).
+
 # Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a

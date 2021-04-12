@@ -26,7 +26,7 @@ The standalone PowerShell script contains the necessary logic to detect and remo
 The [Configuration Baseline](https://docs.microsoft.com/en-us/mem/configmgr/compliance/deploy-use/create-configuration-baselines#configuration-baselines) is a variation of the standalone PowerShell script, adjusted to meet the requirements for Microsoft Endpoint Configuration Manager. Once imported into Configuration Manager, the baseline can be deployed in "_Monitor_" mode (non-remediation) to identify devices that have orphaned TypeLib registry keys. With remediation enabled, the baseline will remove all known orphaned keys from the affected devices.
 
 ### Importing the Configuration Baseline
-1. Download the latest version of the **[Remediation for Orphaned Office TypeLib Keys.cab](https://github.com/bobclements-msft/Office-TypeLib-Remediation/raw/main/Remediation%20for%20Orphaned%20Office%20TypeLib%20Keys.cab)**.
+1. Download the latest version of the **Remediation for Orphaned Office TypeLib Keys.cab**.
 2. Open the **Configuration Manager** console.
 3. From the **Assets and Compliance** workspace, expand **Compliance Settings**.
 4. Right-click on **Configuration Baselines** and select **Import Configuration Data**.

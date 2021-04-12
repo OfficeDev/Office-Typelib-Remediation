@@ -44,20 +44,20 @@ With remediation enabled, the script will remove all known orphaned Office TypeL
     - Select the device collection containing devices that require detection and remediation.
     - Set the deployment schedule appropriately for your environment.
 
-## Logging
+### Logging
 Both resources are setup to log output in the following location: _%windir%\Temp\typelibfix.log_
 
-## PowerShell Execution Policy
+### PowerShell Execution Policy
 The PowerShell scripts provided as part of this project are provided as-is and are not signed as part of this offering. Before deploying either resource, consider the following options:
 
 - [Sign the PowerShell scripts](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.1) before deployment.
 - For the Configuration Manager, configure the [PowerShell execution policy](https://docs.microsoft.com/en-us/mem/configmgr/core/clients/deploy/about-client-settings#powershell-execution-policy) in Client Settings to bypass script signing requirements.
 
-# License
+## License
 
 Code licensed under the [MIT License](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/LICENSE).
 
-# Contributing
+## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
 Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
@@ -71,7 +71,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-# Trademarks
+## Trademarks
 
 This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
 trademarks or logos is subject to and must follow 

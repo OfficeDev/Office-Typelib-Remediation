@@ -3,13 +3,13 @@ In some circumstances, devices that have had a previously installed 32-bit Offic
 
 ## In this repository
 
-- [Standalone PowerShell Script: Remediate-OfficeTypeLib.ps1](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediate-OfficeTypeLib.ps1)
+- [Remediate-OfficeTypeLib.ps1](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediate-OfficeTypeLib.ps1)
 
-    The standalone PowerShell script contains the necessary logic to detect and remove all known orphaned Office TypeLib registry keys. When executed, this script will scan the current device and apply remediation automatically. 
+    This PowerShell script scans the registry for TypeLib keys (HKLM:\Software\WOW6432Node\Classes\TypeLib\ and HKLM:\Software\Classes\TypeLib\) for orphaned values and removes them. By default this script will run in ScanOnly mode, preventing automatic remediation. To enable remedation, set the ScanOnly parameter to $false. For example: _.\Remediate-OfficeTypeLib.ps1 -ScanOnly:$false_
 
-    **Script requirements:**
-    - Executed with administrative privileges
-    - Executed as a 64-bit process
+- [Remediate-OfficeInterfaces.ps1](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediate-OfficeInterfaces.ps1)
+
+    This PowerShell script scans the registry for Interface keys (HKLM:\Software\WOW6432Node\Classes\Interface\) for corrupted (empty) values and removes them. By default this script will run in ScanOnly mode, preventing automatic remediation. To enable remedation, set the ScanOnly parameter to $false. For example: _.\Remediate-OfficeInterfaces.ps1 -ScanOnly:$false_
 
 - [Configuration Baseline: Remediation for Orphaned Office TypeLib Keys.cab](https://github.com/OfficeDev/Office-Typelib-Remediation/blob/main/packages/Remediation%20for%20Orphaned%20Office%20TypeLib%20Keys.cab)
 
@@ -45,10 +45,10 @@ With remediation enabled, the script will remove all known orphaned Office TypeL
     - Set the deployment schedule appropriately for your environment.
 
 ### Logging
-Both resources are setup to log output in the following location: _%windir%\Temp\typelibfix.log_
+All PowerShell scripts will log output to: _%windir%\Temp\*.log_. This can be changed using the LogFile parameter. For example: _.\Remediate-OfficeInterfaces.ps1 -LogFile C:\OfficeInterfaces.log_.
 
 ### PowerShell Execution Policy
-The PowerShell scripts provided as part of this project are provided as-is and are not signed as part of this offering. Before deploying either resource, consider the following options:
+The PowerShell scripts are provided as-is and are not signed as part of this offering. Before deploying either resource, consider the following options:
 
 - [Sign the PowerShell scripts](https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_signing?view=powershell-7.1) before deployment.
 - For the Configuration Manager, configure the [PowerShell execution policy](https://docs.microsoft.com/en-us/mem/configmgr/core/clients/deploy/about-client-settings#powershell-execution-policy) in Client Settings to bypass script signing requirements.

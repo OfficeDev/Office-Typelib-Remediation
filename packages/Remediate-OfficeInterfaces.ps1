@@ -1,4 +1,4 @@
-﻿<#
+<#
   .SYNOPSIS
   Copyright (c) Microsoft Corporation. All rights reserved.
   Detection and remediation for corrupt Office Interfaces values
@@ -7,19 +7,17 @@
   This script scans the registry for Office 32-bit interface definitions
   that are corrupt (empty) and removes them.
 
+  .PARAMETER LogFile
+  Specifies the location and name of the output log file. By default,
+  the log is written to: %windir%\temp\OfficeInterfaces.log.
+
   .PARAMETER ScanOnly
   Instructs the script to run in ScanOnly mode, disabling automatic remediation.
   This switch is set on by default and must be disabled to enable automatic 
   remediation.
 
-  .INPUTS
-  None. You cannot pipe objects to this script.
-
-  .OUTPUTS
-  Log output is written to: %windir%\temp\OfficeInterfaces.log
-
   .EXAMPLE
-  PS> .\Remediate-OfficeInterfaces.ps1
+  PS> .\Remediate-OfficeInterfaces.ps1 -LogFile C:\OfficeInterfaces.log
 
   .EXAMPLE
   PS> .\Remediate-OfficeInterfaces.ps1 -ScanOnly:$false
@@ -27,19 +25,18 @@
 
 Param(
     [Parameter(Mandatory=$false)]
+    [String[]]$LogFile = "$env:windir\Temp\OfficeInterfaces.log",
 
+    [Parameter(Mandatory=$false)]
     [Switch]$ScanOnly = $true
-
 )
 
-# Log actions to %windir%\temp\OfficeInterfaces.log
 function Log
 {
     param(
         [Parameter(Mandatory=$true)][string]$logMessage
     )
 
-    $LogFile = "$env:windir\Temp\OfficeInterfaces.log"
     $LogDate = get-date -format "MM/dd/yyyy HH:mm:ss"
     $LogLine = "$LogDate $logMessage"
     Add-Content -Path $LogFile -Value $LogLine -ErrorAction SilentlyContinue

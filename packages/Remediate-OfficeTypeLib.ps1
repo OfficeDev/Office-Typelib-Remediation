@@ -7,19 +7,17 @@
   This script scans the registry for Office 32-bit TypeLib values
   that are orphaned and removes them.
 
+  .PARAMETER LogFile
+  Specifies the location and name of the output log file. By default,
+  the log is written to: %windir%\temp\OfficeTypeLib.log.
+
   .PARAMETER ScanOnly
   Instructs the script to run in ScanOnly mode, disabling automatic remediation.
   This switch is set on by default and must be disabled to enable automatic 
   remediation.
 
-  .INPUTS
-  None. You cannot pipe objects to this script.
-
-  .OUTPUTS
-  Log output is written to: %windir%\temp\OfficeTypeLib.log
-
   .EXAMPLE
-  PS> .\Remediate-OfficeTypeLib.ps1
+  PS> .\Remediate-OfficeTypeLib.ps1 -LogFile C:\OfficeTypeLib.log
 
   .EXAMPLE
   PS> .\Remediate-OfficeTypeLib.ps1 -ScanOnly:$false
@@ -27,19 +25,18 @@
 
 Param(
     [Parameter(Mandatory=$false)]
-
+    [String[]]$LogFile = "$env:windir\Temp\OfficeTypeLib.log",
+    
+    [Parameter(Mandatory=$false)]
     [Switch]$ScanOnly = $true
-
 )
 
-# Log actions to %windir%\temp\OfficeTypeLib.log
 function Log
 {
     param(
         [Parameter(Mandatory=$true)][string]$logMessage
     )
 
-    $LogFile = "$env:windir\Temp\OfficeTypeLib.log"
     $LogDate = get-date -format "MM/dd/yyyy HH:mm:ss"
     $LogLine = "$LogDate $logMessage"
     Add-Content -Path $LogFile -Value $LogLine -ErrorAction SilentlyContinue

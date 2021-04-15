@@ -1,16 +1,45 @@
-﻿# Copyright (c) Microsoft Corporation. All rights reserved.
-#
-# Detection and remediation for orphaned TypeLib registry keys
-#
+<#
+  .SYNOPSIS
+  Copyright (c) Microsoft Corporation. All rights reserved.
+  Detection and remediation for orphaned TypeLib registry key
 
-# Log actions to %windir%\temp\typelibfix.log
+  .DESCRIPTION
+  This script scans the registry for Office 32-bit TypeLib values
+  that are orphaned and removes them.
+
+  .PARAMETER ScanOnly
+  Instructs the script to run in ScanOnly mode, disabling automatic remediation.
+  This switch is set on by default and must be disabled to enable automatic 
+  remediation.
+
+  .INPUTS
+  None. You cannot pipe objects to this script.
+
+  .OUTPUTS
+  Log output is written to: %windir%\temp\OfficeTypeLib.log
+
+  .EXAMPLE
+  PS> .\Remediate-OfficeTypeLib.ps1
+
+  .EXAMPLE
+  PS> .\Remediate-OfficeTypeLib.ps1 -ScanOnly:$false
+#>
+
+Param(
+    [Parameter(Mandatory=$false)]
+
+    [Switch]$ScanOnly = $true
+
+)
+
+# Log actions to %windir%\temp\OfficeTypeLib.log
 function Log
 {
     param(
         [Parameter(Mandatory=$true)][string]$logMessage
     )
 
-    $LogFile = "$env:windir\Temp\typelibfix.log"
+    $LogFile = "$env:windir\Temp\OfficeTypeLib.log"
     $LogDate = get-date -format "MM/dd/yyyy HH:mm:ss"
     $LogLine = "$LogDate $logMessage"
     Add-Content -Path $LogFile -Value $LogLine -ErrorAction SilentlyContinue
@@ -22,6 +51,12 @@ function ProcessTypelibHive
     param (
         [string] $sHive
     )
+
+    if ($ScanOnly)
+    {
+        Log("Running in ScanOnly mode")
+    }
+
     ForEach ($tl in $arrTypeLibs) 
     {
         $sKey = $sHive + $tl
@@ -61,9 +96,12 @@ function ProcessTypelibHive
                         Log("Found corrupt win32 typelib registration for $tl referencing non-existant file $libraryPath")
                         Write-Output "Found corrupt win32 typelib registration for $tl referencing non-existant file $libraryPath"
 
-                        Log("Removing key $swin32Key")
-                        Write-Output "Removing key $swin32Key"
-                        Remove-Item $sWin32Key
+                        if (!$ScanOnly)
+                        {
+                            Log("Removing key $swin32Key")
+                            Write-Output "Removing key $swin32Key"
+                            Remove-Item $sWin32Key -Force
+                        }
                     }
                 }
             }
